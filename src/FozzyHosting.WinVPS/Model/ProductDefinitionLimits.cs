@@ -1,0 +1,218 @@
+/* 
+ * Fozzy Windows VPS resellers API
+ *
+ *  Application Programming Interface (API) allows clients to manage the Windows VPS machines lifecycle.  ## Endpoint  `https://winvps.fozzy.com/api/v2/`  ## Authentication  To access the API, an existing client of Fozzy Inc. should be registered as Windows VPS Reseller by the company tech support through the ticket or using Sales Email. After that, the client will have an access to the winvps.fozzy.com and will be able to get an API Token (Signature) in `Settings -> API` section of main menu.  If you have already used the previous API version, then the token is known to you.  Note that the Token grants full access to your account and should be protected the same way you would protect your password. Also you can reset the Token on the receipt page.  To use the Token you should pass it to `Api-Key` header of each request like this:  ` curl -H 'API-KEY: TOKEN' https://winvps.fozzy.com/api/v2/products `  ## Content-Type  API v2 supports `application/json`, `application/x-www-form-urlencoded` and `multipart/form-data` content types.  In the first case HTTP request must be JSON-encoded with the body as a valid JSON string. The othres are default POST types with content in key=value format.  The response always has `application/json` type and contains JSON-encoded payload.  ## Response  A successful response will be returned as a JSON object with at least one of the following top-level members: - `data` - the document’s “primary data” - `error` - error message - `pagination` - pagination details  The members data and error cannot coexist in the same document.  ### Codes   - `200 OK` - Everything worked as expected.  - `201 Created` - The request was successful and a resource was created. This is typically a response from a POST request to create a resource which runs immediately.  - `202 Accepted` - The request has been accepted for processing. This is typically a response from a POST request that is handled async in our system, such as a request for some machine command.  - `204 No Content` - The request was successful but the response body is empty. This is typically a response from a DELETE request to delete a resource or cancel the command.  - `400 Bad Request` - A required parameter or the request is invalid.  - `403 Unauthorized` - The authentication credentials are invalid.  - `404 Not Found` - The requested resource doesn’t exist.  - `500 Server error` - something went wrong. Please contact our support team.  ### Examples  #### Error:  ```json {   \"error\": \"Error message\" } ```  #### Success - retrieve single record:  ```json {   \"data\": {     \"id\": 1,     \"name\": \"String\"   } } ```   #### Success - retrieve multiple records:  ```json {   \"data\": [     {       \"id\": 1,       \"name\": \"String\"     }, {       \"id\": 2,       \"name\": \"String\"     }   ],   \"pagination\": {     \"total\": 10,   } } ```  #### Success - response for some delayed action:  ```json {   \"data\": {     \"name\": \"String\",     \"jobs\": [       {         \"id\": 0,         \"parent_id\": 0,         \"machine_id\": 0,         \"type\": \"string\",         \"status\": \"string\",         \"start_time\": \"string\"       }     ]   } } ```  ## Pagination  Any API endpoint that returns a list of items requires pagination. By default we will return `50` records from any listing endpoint.  If an API endpoint returns a list of items, then it will include an additional object with pagination information.  The pagination information contains the following details:   - `total` - The total number of entries available in the entire collection  - `limit` - The number of entries returned per page (default: 50)  - `page` - The page currently returned (default: 1)  - `pages` - The total number of pages  To go through the pages you need to pass additional GET parameter `page` with the number of page wanted.  ## Entities meaning  ### Product  A product is a resources set with which a VPS will be created by default. This is a resources such ads CPU cores count, CPU power in percents of the maximum available limit, RAM minimum and maximum values, Disk Size etc.  ### Template  Template is an operating system version for VPS.  ### Brand  Brand is a set of custom software which installs on the machine automatically. Currently this set can be created only through the request to our administrators.  ### Location  Location is a list of regions in which the new VPS creation is available.  ### Job  Job is a command to perform specific actions on the machine such as creation, starting, changing, terminating, etc. Since most actions cannot be performed instantly, they are all queued and executed one after another. You will receive an additional property `jobs` in your response if any request generates new queue positions.  ### Machine  Machine is a virtual private server (VPS) which used to your own needs. Each Mahine has Operating System defined by **Template** installed on the server in a data center in a country specified by **Location** option. The machine has some specified by **Product** resources which can be used by your software installed automatically by the **Brand** option or manually from the RDP interface. 
+ *
+ * OpenAPI spec version: 2.0
+ * 
+ * Generated by: https://github.com/swagger-api/swagger-codegen.git
+ */
+using System;
+using System.Linq;
+using System.IO;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Collections;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Runtime.Serialization;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using System.ComponentModel.DataAnnotations;
+using SwaggerDateConverter = FozzyHosting.WinVPS.Client.SwaggerDateConverter;
+
+namespace FozzyHosting.WinVPS.Model
+{
+    /// <summary>
+    /// Predefined product resources
+    /// </summary>
+    [DataContract]
+        public partial class ProductDefinitionLimits :  IEquatable<ProductDefinitionLimits>, IValidatableObject
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ProductDefinitionLimits" /> class.
+        /// </summary>
+        /// <param name="diskSize">diskSize.</param>
+        /// <param name="ramMin">ramMin.</param>
+        /// <param name="ramMax">ramMax.</param>
+        /// <param name="cpuPercent">cpuPercent.</param>
+        /// <param name="cpuCores">cpuCores.</param>
+        /// <param name="bandwidth">bandwidth.</param>
+        /// <param name="traffic">traffic.</param>
+        public ProductDefinitionLimits(int? diskSize = default(int?), int? ramMin = default(int?), int? ramMax = default(int?), int? cpuPercent = default(int?), int? cpuCores = default(int?), int? bandwidth = default(int?), int? traffic = default(int?))
+        {
+            this.DiskSize = diskSize;
+            this.RamMin = ramMin;
+            this.RamMax = ramMax;
+            this.CpuPercent = cpuPercent;
+            this.CpuCores = cpuCores;
+            this.Bandwidth = bandwidth;
+            this.Traffic = traffic;
+        }
+
+        /// <summary>
+        /// Gets or Sets DiskSize
+        /// </summary>
+        [DataMember(Name="disk_size", EmitDefaultValue=false)]
+        public int? DiskSize { get; set; }
+
+        /// <summary>
+        /// Gets or Sets RamMin
+        /// </summary>
+        [DataMember(Name="ram_min", EmitDefaultValue=false)]
+        public int? RamMin { get; set; }
+
+        /// <summary>
+        /// Gets or Sets RamMax
+        /// </summary>
+        [DataMember(Name="ram_max", EmitDefaultValue=false)]
+        public int? RamMax { get; set; }
+
+        /// <summary>
+        /// Gets or Sets CpuPercent
+        /// </summary>
+        [DataMember(Name="cpu_percent", EmitDefaultValue=false)]
+        public int? CpuPercent { get; set; }
+
+        /// <summary>
+        /// Gets or Sets CpuCores
+        /// </summary>
+        [DataMember(Name="cpu_cores", EmitDefaultValue=false)]
+        public int? CpuCores { get; set; }
+
+        /// <summary>
+        /// Gets or Sets Bandwidth
+        /// </summary>
+        [DataMember(Name="bandwidth", EmitDefaultValue=false)]
+        public int? Bandwidth { get; set; }
+
+        /// <summary>
+        /// Gets or Sets Traffic
+        /// </summary>
+        [DataMember(Name="traffic", EmitDefaultValue=false)]
+        public int? Traffic { get; set; }
+
+        /// <summary>
+        /// Returns the string presentation of the object
+        /// </summary>
+        /// <returns>String presentation of the object</returns>
+        public override string ToString()
+        {
+            var sb = new StringBuilder();
+            sb.Append("class ProductDefinitionLimits {\n");
+            sb.Append("  DiskSize: ").Append(DiskSize).Append("\n");
+            sb.Append("  RamMin: ").Append(RamMin).Append("\n");
+            sb.Append("  RamMax: ").Append(RamMax).Append("\n");
+            sb.Append("  CpuPercent: ").Append(CpuPercent).Append("\n");
+            sb.Append("  CpuCores: ").Append(CpuCores).Append("\n");
+            sb.Append("  Bandwidth: ").Append(Bandwidth).Append("\n");
+            sb.Append("  Traffic: ").Append(Traffic).Append("\n");
+            sb.Append("}\n");
+            return sb.ToString();
+        }
+
+        /// <summary>
+        /// Returns the JSON string presentation of the object
+        /// </summary>
+        /// <returns>JSON string presentation of the object</returns>
+        public virtual string ToJson()
+        {
+            return JsonConvert.SerializeObject(this, Formatting.Indented);
+        }
+
+        /// <summary>
+        /// Returns true if objects are equal
+        /// </summary>
+        /// <param name="input">Object to be compared</param>
+        /// <returns>Boolean</returns>
+        public override bool Equals(object input)
+        {
+            return this.Equals(input as ProductDefinitionLimits);
+        }
+
+        /// <summary>
+        /// Returns true if ProductDefinitionLimits instances are equal
+        /// </summary>
+        /// <param name="input">Instance of ProductDefinitionLimits to be compared</param>
+        /// <returns>Boolean</returns>
+        public bool Equals(ProductDefinitionLimits input)
+        {
+            if (input == null)
+                return false;
+
+            return 
+                (
+                    this.DiskSize == input.DiskSize ||
+                    (this.DiskSize != null &&
+                    this.DiskSize.Equals(input.DiskSize))
+                ) && 
+                (
+                    this.RamMin == input.RamMin ||
+                    (this.RamMin != null &&
+                    this.RamMin.Equals(input.RamMin))
+                ) && 
+                (
+                    this.RamMax == input.RamMax ||
+                    (this.RamMax != null &&
+                    this.RamMax.Equals(input.RamMax))
+                ) && 
+                (
+                    this.CpuPercent == input.CpuPercent ||
+                    (this.CpuPercent != null &&
+                    this.CpuPercent.Equals(input.CpuPercent))
+                ) && 
+                (
+                    this.CpuCores == input.CpuCores ||
+                    (this.CpuCores != null &&
+                    this.CpuCores.Equals(input.CpuCores))
+                ) && 
+                (
+                    this.Bandwidth == input.Bandwidth ||
+                    (this.Bandwidth != null &&
+                    this.Bandwidth.Equals(input.Bandwidth))
+                ) && 
+                (
+                    this.Traffic == input.Traffic ||
+                    (this.Traffic != null &&
+                    this.Traffic.Equals(input.Traffic))
+                );
+        }
+
+        /// <summary>
+        /// Gets the hash code
+        /// </summary>
+        /// <returns>Hash code</returns>
+        public override int GetHashCode()
+        {
+            unchecked // Overflow is fine, just wrap
+            {
+                int hashCode = 41;
+                if (this.DiskSize != null)
+                    hashCode = hashCode * 59 + this.DiskSize.GetHashCode();
+                if (this.RamMin != null)
+                    hashCode = hashCode * 59 + this.RamMin.GetHashCode();
+                if (this.RamMax != null)
+                    hashCode = hashCode * 59 + this.RamMax.GetHashCode();
+                if (this.CpuPercent != null)
+                    hashCode = hashCode * 59 + this.CpuPercent.GetHashCode();
+                if (this.CpuCores != null)
+                    hashCode = hashCode * 59 + this.CpuCores.GetHashCode();
+                if (this.Bandwidth != null)
+                    hashCode = hashCode * 59 + this.Bandwidth.GetHashCode();
+                if (this.Traffic != null)
+                    hashCode = hashCode * 59 + this.Traffic.GetHashCode();
+                return hashCode;
+            }
+        }
+
+        /// <summary>
+        /// To validate all properties of the instance
+        /// </summary>
+        /// <param name="validationContext">Validation context</param>
+        /// <returns>Validation Result</returns>
+        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        {
+            yield break;
+        }
+    }
+}
