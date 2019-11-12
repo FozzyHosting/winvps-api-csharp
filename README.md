@@ -1,4 +1,4 @@
-# Fozzy Windows VPS APIs Client library for Java
+# Fozzy Windows VPS APIs Client library for C#
 
 The API Client Library enables you to work with Fozzy Windows VPS APIs for creating or managing your machines.
 
