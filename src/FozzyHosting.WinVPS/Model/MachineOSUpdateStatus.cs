@@ -24,25 +24,49 @@ using SwaggerDateConverter = FozzyHosting.WinVPS.Client.SwaggerDateConverter;
 namespace FozzyHosting.WinVPS.Model
 {
     /// <summary>
-    /// MachineCreateResponse
+    /// MachineOSUpdateStatus
     /// </summary>
     [DataContract]
-        public partial class MachineCreateResponse :  IEquatable<MachineCreateResponse>, IValidatableObject
+        public partial class MachineOSUpdateStatus :  IEquatable<MachineOSUpdateStatus>, IValidatableObject
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="MachineCreateResponse" /> class.
+        /// Initializes a new instance of the <see cref="MachineOSUpdateStatus" /> class.
         /// </summary>
-        /// <param name="data">data.</param>
-        public MachineCreateResponse(MachineCreateResponseData data = default(MachineCreateResponseData))
+        /// <param name="hResult">hResult.</param>
+        /// <param name="rebootRequired">rebootRequired.</param>
+        /// <param name="resultCode">resultCode.</param>
+        /// <param name="updateTime">updateTime.</param>
+        public MachineOSUpdateStatus(int? hResult = default(int?), bool? rebootRequired = default(bool?), int? resultCode = default(int?), string updateTime = default(string))
         {
-            this.Data = data;
+            this.HResult = hResult;
+            this.RebootRequired = rebootRequired;
+            this.ResultCode = resultCode;
+            this.UpdateTime = updateTime;
         }
 
         /// <summary>
-        /// Gets or Sets Data
+        /// Gets or Sets HResult
         /// </summary>
-        [DataMember(Name="data", EmitDefaultValue=false)]
-        public MachineCreateResponseData Data { get; set; }
+        [DataMember(Name="h_result", EmitDefaultValue=false)]
+        public int? HResult { get; set; }
+
+        /// <summary>
+        /// Gets or Sets RebootRequired
+        /// </summary>
+        [DataMember(Name="reboot_required", EmitDefaultValue=false)]
+        public bool? RebootRequired { get; set; }
+
+        /// <summary>
+        /// Gets or Sets ResultCode
+        /// </summary>
+        [DataMember(Name="result_code", EmitDefaultValue=false)]
+        public int? ResultCode { get; set; }
+
+        /// <summary>
+        /// Gets or Sets UpdateTime
+        /// </summary>
+        [DataMember(Name="update_time", EmitDefaultValue=false)]
+        public string UpdateTime { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -51,8 +75,11 @@ namespace FozzyHosting.WinVPS.Model
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append("class MachineCreateResponse {\n");
-            sb.Append("  Data: ").Append(Data).Append("\n");
+            sb.Append("class MachineOSUpdateStatus {\n");
+            sb.Append("  HResult: ").Append(HResult).Append("\n");
+            sb.Append("  RebootRequired: ").Append(RebootRequired).Append("\n");
+            sb.Append("  ResultCode: ").Append(ResultCode).Append("\n");
+            sb.Append("  UpdateTime: ").Append(UpdateTime).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -73,24 +100,39 @@ namespace FozzyHosting.WinVPS.Model
         /// <returns>Boolean</returns>
         public override bool Equals(object input)
         {
-            return this.Equals(input as MachineCreateResponse);
+            return this.Equals(input as MachineOSUpdateStatus);
         }
 
         /// <summary>
-        /// Returns true if MachineCreateResponse instances are equal
+        /// Returns true if MachineOSUpdateStatus instances are equal
         /// </summary>
-        /// <param name="input">Instance of MachineCreateResponse to be compared</param>
+        /// <param name="input">Instance of MachineOSUpdateStatus to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(MachineCreateResponse input)
+        public bool Equals(MachineOSUpdateStatus input)
         {
             if (input == null)
                 return false;
 
             return 
                 (
-                    this.Data == input.Data ||
-                    (this.Data != null &&
-                    this.Data.Equals(input.Data))
+                    this.HResult == input.HResult ||
+                    (this.HResult != null &&
+                    this.HResult.Equals(input.HResult))
+                ) && 
+                (
+                    this.RebootRequired == input.RebootRequired ||
+                    (this.RebootRequired != null &&
+                    this.RebootRequired.Equals(input.RebootRequired))
+                ) && 
+                (
+                    this.ResultCode == input.ResultCode ||
+                    (this.ResultCode != null &&
+                    this.ResultCode.Equals(input.ResultCode))
+                ) && 
+                (
+                    this.UpdateTime == input.UpdateTime ||
+                    (this.UpdateTime != null &&
+                    this.UpdateTime.Equals(input.UpdateTime))
                 );
         }
 
@@ -103,8 +145,14 @@ namespace FozzyHosting.WinVPS.Model
             unchecked // Overflow is fine, just wrap
             {
                 int hashCode = 41;
-                if (this.Data != null)
-                    hashCode = hashCode * 59 + this.Data.GetHashCode();
+                if (this.HResult != null)
+                    hashCode = hashCode * 59 + this.HResult.GetHashCode();
+                if (this.RebootRequired != null)
+                    hashCode = hashCode * 59 + this.RebootRequired.GetHashCode();
+                if (this.ResultCode != null)
+                    hashCode = hashCode * 59 + this.ResultCode.GetHashCode();
+                if (this.UpdateTime != null)
+                    hashCode = hashCode * 59 + this.UpdateTime.GetHashCode();
                 return hashCode;
             }
         }
