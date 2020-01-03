@@ -14,6 +14,7 @@ Name | Type | Description | Notes
 **AddCpu** | **int?** | Additional CPU cores count. | [optional] 
 **AddBand** | **int?** | Additional bandwidth. | [optional] 
 **AutoStart** | **int?** |  | [optional] 
+**AddIpv6** | **int?** |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
