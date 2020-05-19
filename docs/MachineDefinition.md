@@ -5,6 +5,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Name** | **string** | Machine name and primary Key. | [optional] 
 **Status** | **string** | Current machine status. | [optional] 
+**Notes** | **string** | Machine notes. | [optional] 
 **Ips** | [**List&lt;IpDefinition&gt;**](IpDefinition.md) | List of IPs assegned to the Machine. | [optional] 
 **Os** | [**MachineOS**](MachineOS.md) |  | [optional] 
 **Config** | [**MachineConfig**](MachineConfig.md) |  | [optional] 
